@@ -16,12 +16,12 @@ public interface TopoService {
     Topo findByToponame(String toponame);
  
     
-	public Topo findTopo(Long id);
+	public Topo findTopo(int id);
 	
 	
-	public void deleteTopo(Long id);
+	public void deleteTopo(int id);
 
-	Topo findTopo1(Long id);
+	Topo findTopo1(int id);
     
     
     

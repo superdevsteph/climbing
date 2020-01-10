@@ -156,7 +156,7 @@
 
 				<div class="form-group col-10">
 
-					<label for="region">Nombre de sites</label>
+					<label for="nbSites">Nombre de sites</label>
 					<form:input class="form-control" path="nbSites" required="required" />
 					<form:errors path="nbSites" class="error-message" />
 				</div>
@@ -164,20 +164,20 @@
 
 				<div class="form-group col-10">
 
-					<label for="region">Nombre de secteurs</label>
+					<label for="nbSecteurs">Nombre de secteurs</label>
 					<form:input class="form-control" path="nbSecteurs" required="required" />
 					<form:errors path="nbSecteurs" class="error-message" />
 				</div>
 
 				<div class="form-group col-10">
 
-					<label for="region">Nombre de voies</label>
+					<label for="nbVoies">Nombre de voies</label>
 					<form:input class="form-control" path="nbVoies" required="required" />
 					<form:errors path="nbVoies" class="error-message" />
 				</div>
 				<div class="form-group col-10">
 
-					<label for="region">Date de publication</label>
+					<label for="datePublication">Date de publication</label>
 					<form:input class="form-control" type="date" path="datePublication" required="required" />
 					<form:errors path="datePublication" class="error-message" />
 				</div>
@@ -185,8 +185,8 @@
 				<div class="form-group col-10">
 					<label for="bio">Description</label>
 
-					<textarea class="form-control" path="description" id="bio" rows="3"></textarea>
-
+					<form:input  class="form-control" path="description" id="bio" rows="3" required="required" />
+					<form:errors path="description" class="error-message" />
 
 				</div>
 

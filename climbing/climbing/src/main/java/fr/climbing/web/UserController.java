@@ -1,3 +1,4 @@
+
 package fr.climbing.web;
 
 import java.text.SimpleDateFormat;
@@ -11,14 +12,12 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fr.climbing.model.Topo;
 import fr.climbing.model.User;
@@ -28,123 +27,122 @@ import fr.climbing.service.UserService;
 import fr.climbing.validator.TopoValidator;
 import fr.climbing.validator.UserValidator;
 
-
 @Controller
 public class UserController {
-    @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private TopoService topoService;
 
-    @Autowired
-    private SecurityService securityService;
+	@Autowired
+	private UserService userService;
 
-    @Autowired
-    private UserValidator userValidator;
+	@Autowired
+	private TopoService topoService;
 
+	@Autowired
+	private SecurityService securityService;
 
-    @Autowired
-    private TopoValidator topoValidator;
-    
-    
-    
-    @InitBinder
+	@Autowired
+	private UserValidator userValidator;
+
+	@Autowired
+	private TopoValidator topoValidator;
+
+	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, null, new CustomDateEditor(dateFormat, true));
 	}
 
-    @RequestMapping("/home")
-   	public String home(Model model) {
+	@RequestMapping("/home")
+	public String home(Model model) {
 
-   		return "home";
-   	}
-    @RequestMapping("/about")
-   	public String about(Model model) {
+		return "home";
+	}
 
-   		return "about";
-   	}
- 
-    @RequestMapping("/formUser")
-   	public String formUser(Model model) {
+	@RequestMapping("/about")
+	public String about(Model model) {
 
-   		return "formUser";
-   	}
-    
-    @RequestMapping("/contact")
-   	public String contact(Model model) {
+		return "about";
+	}
 
-   		return "contact";
-   	}
- 
-    @RequestMapping("/articles")
-   	public String articles(Model model) {
+	@RequestMapping("/formUser")
+	public String formUser(Model model) {
 
-   		return "articles";
-   	}
-    
+		return "formUser";
+	}
+
+	@RequestMapping("/contact")
+	public String contact(Model model) {
+
+		return "contact";
+	}
+
+	@RequestMapping("/articles")
+	public String articles(Model model) {
+
+		return "articles";
+	}
+
 	@RequestMapping("/infos")
 	public String infos(Model model) {
 
 		return "infos";
 	}
-    
-    @RequestMapping(value = "/topoForm", method = RequestMethod.GET)
-    public String topoForm(Model model) {
-        model.addAttribute("userForm", new Topo());
 
-        return "topoForm";
-    }
-    
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+	@RequestMapping(value = "/topoForm", method = RequestMethod.GET)
+	public String topoForm(Model model) {
+		model.addAttribute("userForm", new Topo());
 
-        return "registration";
-    }
+		return "topoForm";
+	}
 
-	  @RequestMapping(value = "/topoList", method = RequestMethod.GET) public
-	  String topoList(Model model) { List<Topo> list = topoService.listTopoInfos();
-	  model.addAttribute("topoInfos", list);
-	  
-	  return "topoList"; }
-	  
-	
-    
+	@RequestMapping(value = "/registration", method = RequestMethod.GET)
+	public String registration(Model model) {
+		model.addAttribute("userForm", new User());
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-        userValidator.validate(userForm, bindingResult);
+		return "registration";
+	}
 
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
+	@RequestMapping(value = "/topoList", method = RequestMethod.GET)
+	public String topoList(Model model) {
+		List<Topo> list = topoService.listTopoInfos();
+		model.addAttribute("topoInfos", list);
 
-        userService.save(userForm);
+		return "topoList";
+	}
 
-        securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
+	/*
+	 * @RequestMapping(value = "/registration", method = RequestMethod.POST) public
+	 * String registration(@ModelAttribute("userForm") User userForm, BindingResult
+	 * bindingResult, Model model) { userValidator.validate(userForm,
+	 * bindingResult);
+	 * 
+	 * if (bindingResult.hasErrors()) { return "registration"; }
+	 * 
+	 * userService.save(userForm);
+	 * 
+	 * securityService.autologin(userForm.getUsername(),
+	 * userForm.getPasswordConfirm());
+	 * 
+	 * return "redirect:/welcome"; }
+	 */
 
-        return "redirect:/welcome";
-    }
-    
-    @RequestMapping(value = "/saveTopo", method = RequestMethod.POST)
-    public String saveTopo(@ModelAttribute("userForm") Topo userForm, BindingResult bindingResult, Model model) {
-        topoValidator.validate(userForm, bindingResult);
+	@RequestMapping(value = "/saveTopo", method = RequestMethod.POST)
+	public String saveTopo(@ModelAttribute("userForm") Topo userForm, BindingResult bindingResult, Model model) {
+		topoValidator.validate(userForm, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            return "topoForm";
-        }
+		if (bindingResult.hasErrors()) {
 
-        topoService.saveTopo(userForm);
+			return "topoForm";
 
-       
-        return "topoList";
-    }
-    
+		}
+
+		topoService.saveTopo(userForm);
+
+		return "topoList";
+	}
+
 	@RequestMapping("/editTopo")
-	public String editTopo(Model model, @RequestParam("id") Long id) {
+	public String editTopo(Model model, @RequestParam("id") int id) {
 		Topo topo = null;
 		if (id != 0) {
 			topo = this.topoService.findTopo(id);
@@ -157,32 +155,30 @@ public class UserController {
 	}
 
 	@RequestMapping("/deleteTopo")
-	public String deleteTopo(Model model, @RequestParam("id") Long id) {
+	public String deleteTopo(Model model, @RequestParam("id") int id) {
 		if (id != 0) {
 			this.topoService.deleteTopo(id);
 		}
 		return "redirect:/topoList";
 	}
-    
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, String error, String logout) {
-        if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model, String error, String logout) {
+		if (error != null)
+			model.addAttribute("error", "Your username and password is invalid.");
 
-        if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
+		if (logout != null)
+			model.addAttribute("message", "You have been logged out successfully.");
 
-        return "login";
-    }
+		return "login";
+	}
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
-        return "welcome";
-    }
-    
-    
-    /*
+	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
+	public String welcome(Model model) {
+		return "welcome";
+	}
+
+	/*
 	 * @RequestMapping(value = "/userList", method = RequestMethod.GET) public
 	 * String userList(Model model) { List<User> list = userService.listUserInfos();
 	 * model.addAttribute("userInfos", list);
@@ -190,22 +186,21 @@ public class UserController {
 	 * return "userList"; }
 	 */
 
-	/*
-	 * @RequestMapping(value = "/registration", method = RequestMethod.POST) public
-	 * String registration(@ModelAttribute("userForm") User userForm, BindingResult
-	 * bindingResult, Model model) { userValidator.validate(userForm,
-	 * bindingResult);
-	 * 
-	 * if (bindingResult.hasErrors()) { return "registration"; }
-	 * 
-	 * userService.saveUser2(userForm);
-	 * 
-	 * securityService.autologin(userForm.getUsername(),
-	 * userForm.getPasswordConfirm());
-	 * 
-	 * return "redirect:/welcome"; }
-	 */
-    
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+		userValidator.validate(userForm, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			return "registration";
+		}
+
+		userService.save(userForm);
+
+		securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
+
+		return "redirect:/welcome";
+	}
+
 	/*
 	 * @RequestMapping(value = "/saveUser", method = RequestMethod.POST) public
 	 * String saveUser(Model model, //
@@ -223,25 +218,24 @@ public class UserController {
 	 * return "redirect:/userList";
 	 * 
 	 * }
+	 * 
+	 * 
+	 * @RequestMapping(value = "/saveUser2", method = RequestMethod.POST) public
+	 * String saveUser2(Model model, //
+	 * 
+	 * @ModelAttribute("userForm") @Validated User user, // BindingResult result, //
+	 * final RedirectAttributes redirectAttributes) {
+	 * 
+	 * if (result.hasErrors()) { return this.registration(model); }
+	 * 
+	 * this.userService.saveUser2(user);
+	 * 
+	 * // Important!!: Need @EnableWebMvc // Add message to flash scope
+	 * redirectAttributes.addFlashAttribute("message", "Save User Successful");
+	 * 
+	 * return "redirect:/welcome";
+	 * 
+	 * }
 	 */
-	
-/*	@RequestMapping(value = "/saveUser2", method = RequestMethod.POST)
-	public String saveUser2(Model model, //
-			@ModelAttribute("userForm") @Validated User user, //
-			BindingResult result, //
-			final RedirectAttributes redirectAttributes) {
 
-		if (result.hasErrors()) {
-			return this.registration(model);
-		}*/
-/*
-		this.userService.saveUser2(user);
-
-		// Important!!: Need @EnableWebMvc
-		// Add message to flash scope
-		redirectAttributes.addFlashAttribute("message", "Save User Successful");
-
-		return "redirect:/welcome";
-
-	}*/
 }

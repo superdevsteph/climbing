@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_topo")
 public class Topo {
-    private Long id;
+    private int id;
     private String toponame;
     private String region;
     private int nbSites;
@@ -31,7 +31,7 @@ public class Topo {
 		
 	}
 
-	public Topo(Long id, String toponame, String region, int nbSites, int nbSecteurs, int nbVoies, boolean disponible,
+	public Topo(int id, String toponame, String region, int nbSites, int nbSecteurs, int nbVoies, boolean disponible,
 			String description, Date datePublication) {
 		super();
 		this.id = id;
@@ -48,11 +48,11 @@ public class Topo {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	   @Column(name = "topo_id", length = 50, nullable = false)
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

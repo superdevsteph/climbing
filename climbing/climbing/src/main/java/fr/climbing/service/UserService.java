@@ -10,6 +10,8 @@ public interface UserService {
 	
 	User findByUsername(String username);
 	
+	 public User getUser(String username);
+	
 	/*
 	 * void saveUser(User user);
 	 * 

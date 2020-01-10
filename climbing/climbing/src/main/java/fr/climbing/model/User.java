@@ -1,25 +1,49 @@
 package fr.climbing.model;
 
 
-import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "user")
 public class User {
-    private Long id;
+    private int id;
     private String username;
     private String password;
     private String passwordConfirm;
     private Set<Role> roles;
 
-    @Id
+   
+
+	public User(String username, String password, boolean enabled, boolean accountNonExpired,
+			boolean credentialsNonExpired, boolean accountNonLocked,
+			Collection<? extends GrantedAuthority> authorities) {
+		
+	}
+
+	public User() {
+		
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -53,8 +77,12 @@ public class User {
     public Set<Role> getRoles() {
         return roles;
     }
+    
+    
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+    
+ 
 }

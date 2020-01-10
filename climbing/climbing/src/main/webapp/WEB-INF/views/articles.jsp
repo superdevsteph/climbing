@@ -65,7 +65,7 @@ $('.navbar-light .dmenu').hover(function () {
             <a class="nav-link" href="${pageContext.request.contextPath}/topoList">Les topos</a>
           </li>
           <li class="nav-item">
-                      <a class="nav-link" href="${pageContext.request.contextPath}/infos">Nous contacter</a>
+                      <a class="nav-link" href="${pageContext.request.contextPath}/contact">Nous contacter</a>
           </li>
             <li class="nav-item dropdown dmenu">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">

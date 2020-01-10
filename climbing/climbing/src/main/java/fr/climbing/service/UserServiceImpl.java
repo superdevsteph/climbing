@@ -1,5 +1,6 @@
 package fr.climbing.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -30,6 +31,20 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	private Session openSession() {
+        return sessionFactory.getCurrentSession();
+    }
+	
+	public User getUser(String username) {
+        List<User> userList = new ArrayList<User>();
+        Query query = openSession().createQuery("from User u where u.username = :username");
+        query.setParameter("username", username);
+        userList = query.list();
+        if (userList.size() > 0)
+            return userList.get(0);
+        else
+            return null;    
+    }
 	 @Override
 	    public void save(User user) {
 	        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

@@ -25,7 +25,7 @@ public class TopoServiceImpl implements TopoService {
     private TopoRepository topoRepository;
     
     @Override
-	public Topo findTopo(Long id) {
+	public Topo findTopo(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria crit = session.createCriteria(Topo.class);
 		crit.add(Restrictions.eq("id", id));
@@ -34,7 +34,7 @@ public class TopoServiceImpl implements TopoService {
 
     
 	@Override
-	public Topo findTopo1(Long id) {
+	public Topo findTopo1(int id) {
 		Topo topo = this.findTopo(id);
 		if (topo == null) {
 			return null;
@@ -64,9 +64,9 @@ public class TopoServiceImpl implements TopoService {
     @Override
     public void saveTopo(Topo topo) {
        
-    	Long id = topo.getId();
+    	int id = topo.getId();
 		Topo Topo = null;
-		if (id != null) {
+		if (id != 0) {
 			Topo = this.findTopo(id);
 		}
 		boolean isNew = false;
@@ -101,7 +101,7 @@ public class TopoServiceImpl implements TopoService {
 
     @Transactional
 	@Override
-	public void deleteTopo(Long id) {
+	public void deleteTopo(int id) {
 		Topo Topo = this.findTopo(id);
 		if (Topo != null) {
 			this.sessionFactory.getCurrentSession().delete(Topo);
