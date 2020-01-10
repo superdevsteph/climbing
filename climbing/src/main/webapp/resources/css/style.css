@@ -1,11 +1,21 @@
+footer{
+	background-color:#c0c0c0;
+}
+
+
 .social-part .fa{
-    padding-right:20px;
+    padding-right:10px;
 }
 ul li a{
     margin-right: 20px;
 }
-
-body { padding-top: 70px; }
+.form-inline{
+    margin-right: 20px;
+}
+body { 
+	padding-top: 70px; 
+	
+	}
 
 .border-top-primary {
     border-top: 5px solid rgb(0, 123, 255);
@@ -48,10 +58,6 @@ body { padding-top: 70px; }
         margin-top:30px;
    }
 
-.red{
-	height: 600px;
-	background-color: red;
-}
 
 .error-message {
    color: red;
